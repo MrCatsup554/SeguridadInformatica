@@ -1,0 +1,47 @@
+[
+  {
+    "caso": "Control negativo",
+    "fecha_utc": "2026-10-26T19:26:31.001213+00:00",
+    "metodo": "POST",
+    "url": "http://127.0.0.1:3000/login-vulnerable",
+    "solicitud": {
+      "username": "admin",
+      "password": "incorrecta"
+    },
+    "http": 401,
+    "respuesta": {
+      "ok": false,
+      "message": "Credenciales inválidas"
+    }
+  },
+  {
+    "caso": "Control positivo",
+    "fecha_utc": "2026-10-26T19:26:31.003574+00:00",
+    "metodo": "POST",
+    "url": "http://127.0.0.1:3000/login-vulnerable",
+    "solicitud": {
+      "username": "admin",
+      "password": "admin"
+    },
+    "http": 200,
+    "respuesta": {
+      "ok": true,
+      "user": "admin"
+    }
+  },
+  {
+    "caso": "Inyección SQL",
+    "fecha_utc": "2026-10-26T19:26:31.004491+00:00",
+    "metodo": "POST",
+    "url": "http://127.0.0.1:3000/login-vulnerable",
+    "solicitud": {
+      "username": "admin' -- ",
+      "password": "incorrecta"
+    },
+    "http": 200,
+    "respuesta": {
+      "ok": true,
+      "user": "admin"
+    }
+  }
+]

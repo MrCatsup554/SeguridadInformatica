@@ -1,0 +1,26 @@
+
+> seginfo@1.0.0 test
+> node --test test-login.cjs
+
+▶ el login enlaza las entradas como datos y conserva los accesos válidos
+  ✔ admin válido (58.368625ms)
+  ✔ juan válido (2.985917ms)
+  ✔ contraseña incorrecta (1.520375ms)
+  ✔ comentario en usuario (1.16375ms)
+  ✔ tautología en usuario (1.605958ms)
+  ✔ tautología en contraseña (1.339417ms)
+  ✔ consulta apilada como texto (1.878333ms)
+  ✔ usuario con comilla literal (1.7ms)
+  ✔ campos ausentes (1.792667ms)
+  ✔ tipo inválido (1.5455ms)
+  ✔ cadena vacía (0.909125ms)
+  ✔ tabla intacta tras intentos (1.777292ms)
+✔ el login enlaza las entradas como datos y conserva los accesos válidos (243.596708ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 347.131

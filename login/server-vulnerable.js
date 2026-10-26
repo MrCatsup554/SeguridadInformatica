@@ -5,7 +5,6 @@
 
 const express = require("express");
 const sqlite3 = require("sqlite3").verbose();
-const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -18,24 +17,29 @@ db.serialize(() => {
   db.run(
     "CREATE TABLE users (id INTEGER PRIMARY KEY, username TEXT, password TEXT)",
   );
-  db.run("INSERT INTO users (username, password) VALUES ('admin', 'admin')");
-  db.run("INSERT INTO users (username, password) VALUES ('juan', '1234')");
+  db.run("INSERT INTO users (username, password) VALUES (?, ?)", ["admin", "admin"]);
+  db.run("INSERT INTO users (username, password) VALUES (?, ?)", ["juan", "1234"]);
 });
 
 
-app.post("/login-vulnerable", (req, res) => { 
-  const { username, password } = req.body;
+// Se conserva la ruta original para mantener compatible el formulario.
+app.post("/login-vulnerable", (req, res) => {
+  const { username, password } = req.body ?? {};
 
+  if (typeof username !== "string" || typeof password !== "string" ||
+      username.length === 0 || password.length === 0) {
+    return res.status(400).json({ ok: false, message: "Usuario y contraseña requeridos" });
+  }
 
-  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+  const query = "SELECT username FROM users WHERE username = ? AND password = ?";
 
-  console.log("Query ejecutada:", query); 
-
-  db.get(query, (err, row) => {
-    if (err) return res.status(500).json({ error: err.message });
+  db.get(query, [username, password], (err, row) => {
+    if (err) return res.status(500).json({ ok: false, message: "Error interno del servidor" });
     if (row) return res.json({ ok: true, user: row.username });
     res.status(401).json({ ok: false, message: "Credenciales inválidas" });
   });
 });
 
-app.listen(3000, () => console.log("http://localhost:3000"));
+const server = app.listen(Number(process.env.PORT ?? 3000), "127.0.0.1", () => {
+  console.log(`http://127.0.0.1:${server.address().port}`);
+});

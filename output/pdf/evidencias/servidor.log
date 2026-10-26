@@ -1,0 +1,6 @@
+2026-10-26T19:25:40.656Z http://localhost:3000
+2026-10-26T19:25:53.037Z Query ejecutada: SELECT * FROM users WHERE username = 'admin' AND password = 'incorrecta'
+2026-10-26T19:25:59.739Z Query ejecutada: SELECT * FROM users WHERE username = 'admin' -- ' AND password = 'incorrecta'
+2026-10-26T19:26:30.999Z Query ejecutada: SELECT * FROM users WHERE username = 'admin' AND password = 'incorrecta'
+2026-10-26T19:26:31.002Z Query ejecutada: SELECT * FROM users WHERE username = 'admin' AND password = 'admin'
+2026-10-26T19:26:31.003Z Query ejecutada: SELECT * FROM users WHERE username = 'admin' -- ' AND password = 'incorrecta'
