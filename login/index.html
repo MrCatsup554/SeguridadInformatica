@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login SQLi Demo</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        padding-top: 80px;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 300px;
+      }
+      input,
+      button {
+        padding: 10px;
+        font-size: 16px;
+      }
+      #out {
+        margin-top: 20px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <form id="loginForm">
+      <h2>Login (demo SQLi)</h2>
+      <input id="username" placeholder="Usuario" required />
+      <input id="password" type="text" placeholder="Contraseña" required />
+      <button type="submit">Entrar</button>
+    </form>
+    <pre id="out"></pre>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          const res = await fetch("/login-vulnerable", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+
+          const data = await res.json();
+          document.getElementById("out").textContent = JSON.stringify(
+            data,
+            null,
+            2,
+          );
+        });
+    </script>
+  </body>
+</html>
