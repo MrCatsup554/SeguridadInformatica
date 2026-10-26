@@ -1,0 +1,161 @@
+{
+  "fecha_utc": "2026-10-26T20:20:07.186069+00:00",
+  "revision_vulnerable": "fc48115f39d326d76ec9ba991be92494f1111649",
+  "alcance": "Solo loopback; envoltorio de ejecución asigna puerto dinámico y no modifica las consultas.",
+  "resultados": [
+    {
+      "version": "vulnerable",
+      "casos": [
+        {
+          "caso": "Control negativo",
+          "solicitud": {
+            "username": "admin",
+            "password": "incorrecta"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "P1: comentario para admin",
+          "solicitud": {
+            "username": "admin' -- ",
+            "password": "incorrecta"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "admin"
+          }
+        },
+        {
+          "caso": "P2: comentario para juan",
+          "solicitud": {
+            "username": "juan' -- ",
+            "password": "incorrecta"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "juan"
+          }
+        },
+        {
+          "caso": "P3: tautología en usuario",
+          "solicitud": {
+            "username": "' OR 1=1 -- ",
+            "password": "incorrecta"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "admin"
+          }
+        },
+        {
+          "caso": "P4: tautología en contraseña",
+          "solicitud": {
+            "username": "admin",
+            "password": "' OR '1'='1"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "admin"
+          }
+        },
+        {
+          "caso": "Control positivo",
+          "solicitud": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "admin"
+          }
+        }
+      ]
+    },
+    {
+      "version": "parametrizada",
+      "casos": [
+        {
+          "caso": "Control negativo",
+          "solicitud": {
+            "username": "admin",
+            "password": "incorrecta"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "P1: comentario para admin",
+          "solicitud": {
+            "username": "admin' -- ",
+            "password": "incorrecta"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "P2: comentario para juan",
+          "solicitud": {
+            "username": "juan' -- ",
+            "password": "incorrecta"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "P3: tautología en usuario",
+          "solicitud": {
+            "username": "' OR 1=1 -- ",
+            "password": "incorrecta"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "P4: tautología en contraseña",
+          "solicitud": {
+            "username": "admin",
+            "password": "' OR '1'='1"
+          },
+          "http": 401,
+          "respuesta": {
+            "ok": false,
+            "message": "Credenciales inválidas"
+          }
+        },
+        {
+          "caso": "Control positivo",
+          "solicitud": {
+            "username": "admin",
+            "password": "admin"
+          },
+          "http": 200,
+          "respuesta": {
+            "ok": true,
+            "user": "admin"
+          }
+        }
+      ]
+    }
+  ]
+}
